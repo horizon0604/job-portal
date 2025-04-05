@@ -5,7 +5,15 @@ const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
 const supabaseClient = async (supabaseAccessToken) => {
   const supabase = createClient(supabaseUrl, supabaseKey, {
-    global: { headers: { Authorization: `Bearer ${supabaseAccessToken}` } },
+    auth: {
+      autoRefreshToken: false,
+      persistSession: false,
+    },
+    global: {
+      headers: {
+        Authorization: `Bearer ${supabaseAccessToken}`,
+      },
+    },
   });
   // set Supabase JWT on the client object,
   // so it is sent up with all Supabase requests
